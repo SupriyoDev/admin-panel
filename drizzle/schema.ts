@@ -3,8 +3,10 @@ import {
   integer,
   pgTable,
   text,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
+import { Text } from "lucide-react";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -14,7 +16,7 @@ export const usersTable = pgTable("users", {
 });
 
 export const laptopTable = pgTable("laptop_table", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: uuid().primaryKey().notNull().defaultRandom(),
   name: text().notNull(),
   brand: text().notNull(),
   price: doublePrecision().notNull(),

@@ -1,7 +1,8 @@
 import { Laptop } from "lucide-react";
 import React, { useState } from "react";
-import MyInput from "../_components/myInput";
-import AddNewLaptop from "../_components/addnewlaptop";
+
+import AddNewLaptop from "../../_components/addnewlaptop";
+import Link from "next/link";
 
 const AdminPage = () => {
   return (
@@ -13,7 +14,9 @@ const AdminPage = () => {
             Add new Laptop
           </span>{" "}
         </h3>
-        <button className="btn btn-primary rounded-md">+ Add new</button>
+        <Link href={"/admin/allLaptop"}>
+          <button className="btn btn-primary rounded-md">All Laptop</button>
+        </Link>
       </div>
 
       <div className="w-full">

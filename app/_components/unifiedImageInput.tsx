@@ -7,11 +7,13 @@ type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   fieldName: string;
   isMultiple?: boolean;
+  setUrl?: string[];
 };
 
 const UnifiedImgaeinput = ({
   label,
   fieldName,
+  setUrl,
   isMultiple = false,
   className,
   ...props
@@ -32,6 +34,10 @@ const UnifiedImgaeinput = ({
   //create a preview urls when file change
 
   useEffect(() => {
+    if (setUrl) {
+      setPreviewUrl([...setUrl]);
+    }
+
     if (!isMultiple && imagefile && imagefile[0]) {
       const newUrl = URL.createObjectURL(imagefile[0]);
       setPreviewUrl([newUrl]);

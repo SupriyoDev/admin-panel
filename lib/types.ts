@@ -64,3 +64,46 @@ export const laptopFormSchema = z.object({
 export type LaptopformType = z.infer<typeof laptopFormSchema>;
 export type singleImageSchema = z.infer<typeof featureImageSchema>;
 export type MultipleImageSchema = z.infer<typeof galleryImagesSchema>;
+
+export type laptopResponseType = {
+  id: string;
+  name: string;
+  brand: string;
+  price: number;
+  inventory: number;
+  featureImage: string;
+  images: string[];
+  modelNo: string;
+  description: string;
+  ram: string;
+  romsize: string;
+  romtype: string;
+  processor: string;
+  useType: string;
+};
+
+export const laptopDetailsSchema = z.object({
+  name: z.string().min(3, "product name should be atleast 3 characters"),
+  brand: z.string().min(2, "Brand name is required"),
+  price: z
+    .number({ message: "Enter the laptop price" })
+    .min(1, "Enter the laptop price"),
+  inventory: z
+    .number({ message: " Total stocks in number" })
+    .min(1, "Total stocks of this laptop"),
+
+  modelNo: z.string().min(3, { message: "Model no is required" }),
+  description: z
+    .string()
+    .min(10, { message: "Description must be at least 10 characters" }),
+  ram: z.string({ message: "choose the ram size" }),
+  romsize: z.string({ message: "choose the storage size" }),
+  romtype: z.string({ message: "choose the storage type" }),
+  processor: z.string().min(1, { message: "choose processor name " }),
+  useType: z.string({ message: "choose the usage type" }),
+});
+
+export const laptopImgsSchema = z.object({
+  featureImage: featureImageSchema,
+  images: galleryImagesSchema,
+});

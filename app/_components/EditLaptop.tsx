@@ -2,7 +2,13 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { laptopFormSchema, LaptopformType } from "../../lib/types";
+import {
+  laptopDetailsSchema,
+  laptopFormSchema,
+  LaptopformType,
+  laptopImgsSchema,
+  laptopResponseType,
+} from "../../lib/types";
 import {
   LAPTOP_BRANDS,
   LAPTOP_USE_TYPE,
@@ -15,42 +21,30 @@ import axios from "axios";
 import UnifiedImgaeinput from "./unifiedImageInput";
 import UnifiedInput from "./UnifiedInput";
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
-const addnewlaptop = () => {
+export type LaptopDetails = Omit<LaptopformType, "featureImage" | "images">;
+export type LaptopImgs = Pick<LaptopformType, "featureImage" | "images">;
+
+const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
   const [isLoading, setLoading] = useState(false);
+  const [isOpen, setOpen] = useState(true);
 
-  const methods = useForm<LaptopformType>({
-    resolver: zodResolver(laptopFormSchema),
+  const detailMethod = useForm<LaptopDetails>({
+    resolver: zodResolver(laptopDetailsSchema),
+    defaultValues: {
+      ...laptop,
+    },
+  });
+  const imageMethod = useForm<LaptopImgs>({
+    resolver: zodResolver(laptopImgsSchema),
   });
 
-  const OnSubmit = async (data: LaptopformType) => {
+  const OnSubmit = async (data: LaptopDetails) => {
     setLoading(true);
 
-    const formdata = new FormData();
-
-    formdata.append("name", data.name);
-    formdata.append("brand", data.brand);
-    formdata.append("description", data.description);
-    formdata.append("modelNo", data.modelNo);
-    formdata.append("price", String(data.price));
-    formdata.append("inventory", String(data.inventory));
-    formdata.append("processor", data.processor);
-    formdata.append("ram", data.ram);
-    formdata.append("romsize", data.romsize);
-    formdata.append("romtype", data.romtype);
-    formdata.append("useType", data.useType);
-    formdata.append("featureImage", data.featureImage[0]);
-    Array.from(data.images).forEach((image, i) =>
-      formdata.append(`images`, image)
-    );
-
     try {
-      const res = await axios.post("/api/laptop", formdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axios.put("/api/laptop", data);
 
       console.log(res.data);
       setLoading(false);
@@ -62,20 +56,49 @@ const addnewlaptop = () => {
     }
   };
 
+  const OnImageSubmit = async (data: LaptopImgs) => {
+    const formdata = new FormData();
+    formdata.append("id", laptop.id);
+    formdata.append("featureImage", data.featureImage[0]);
+    Array.from(data.images).forEach((image, i) =>
+      formdata.append(`images`, image)
+    );
+
+    try {
+      await axios.post("/api/laptopImg", formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    } catch (error) {
+    } finally {
+    }
+  };
+
   return (
     <div className="h-screen ">
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(OnSubmit)} className=" ">
+      <FormProvider {...detailMethod}>
+        <form onSubmit={detailMethod.handleSubmit(OnSubmit)} className=" ">
+          <div className=" flex gap-4 w-full justify-between">
+            <h2 className=" bg-slate-700  text-white px-8 py-3 text-lg rounded-lg mb-8">
+              Update Laptop Details :
+            </h2>
+            <Link href={"/admin/allLaptop"}>
+              <button className=" btn btn-primary rounded-lg ">Back</button>
+            </Link>
+          </div>
           <div className=" grid grid-cols-2 gap-8">
             <UnifiedInput
               componentType="input"
               fieldName="name"
               label="Laptop Name"
+              setValue={laptop.name}
             />
             <UnifiedInput
               componentType="input"
               fieldName="modelNo"
               label="ModelNo"
+              setValue={laptop.modelNo}
             />
             <UnifiedInput
               componentType="select"
@@ -83,11 +106,13 @@ const addnewlaptop = () => {
               label="Brand"
               triggerLabel="Select Laptop Brand"
               options={LAPTOP_BRANDS}
+              setValue={laptop.brand}
             />
             <UnifiedInput
               componentType="textarea"
               fieldName="description"
               label="Description (Laptop specification)"
+              setValue={laptop.description}
             />
             <UnifiedInput
               componentType="input"
@@ -95,6 +120,7 @@ const addnewlaptop = () => {
               label="Price"
               isNumber={true}
               inputType="number"
+              setValue={String(laptop.price)}
             />
             <UnifiedInput
               componentType="input"
@@ -102,24 +128,28 @@ const addnewlaptop = () => {
               label="Inventory (Total no of stocks..)"
               isNumber={true}
               inputType="number"
+              setValue={String(laptop.inventory)}
             />
             <UnifiedInput
               componentType="radio"
               fieldName="ram"
               label="Ram Size"
               options={RAM_SIZES}
+              setValue={laptop.ram}
             />{" "}
             <UnifiedInput
               componentType="radio"
               fieldName="romtype"
               label="Storage Type"
               options={ROM_TYPES}
+              setValue={laptop.romtype}
             />
             <UnifiedInput
               componentType="radio"
               fieldName="romsize"
               label="Storage Size"
               options={ROM_SIZES}
+              setValue={laptop.romsize}
             />
             <UnifiedInput
               componentType="select"
@@ -127,40 +157,51 @@ const addnewlaptop = () => {
               label="Processor"
               triggerLabel="Choose laptop processor"
               options={PROCESSOR_LISTS}
+              setValue={laptop.processor}
             />
             <UnifiedInput
               componentType="radio"
               fieldName="useType"
               label="Laptop Uses"
               options={LAPTOP_USE_TYPE}
-            />
-            <UnifiedImgaeinput fieldName="featureImage" label="Feature Image" />
-            <UnifiedImgaeinput
-              isMultiple={true}
-              fieldName="images"
-              label="Gallery Images (Max-3)"
+              setValue={laptop.useType}
             />
           </div>
 
           <button
             disabled={isLoading}
-            className="btn btn-primary mystyle mt-6 "
+            className="btn btn-warning text-black  text-lg mystyle mt-6 max-w-[200px]  "
           >
-            {isLoading ? (
-              <p>
-                <Loader2 className="w-8 h-8 animate-spin text-amber-500" />{" "}
-                <span>Submitting</span>{" "}
-              </p>
-            ) : (
-              "Submit"
-            )}
+            Update Details
           </button>
         </form>
       </FormProvider>
 
-      <div></div>
+      <div className="mt-20 py-10">
+        <h3 className="bg-slate-700 text-white px-8 py-3 text-lg rounded-lg mb-8">
+          Update Laptop images :
+        </h3>
+        <FormProvider {...imageMethod}>
+          <form onSubmit={imageMethod.handleSubmit(OnImageSubmit)}>
+            <UnifiedImgaeinput
+              fieldName="featureImage"
+              label="Feature Image"
+              setUrl={[laptop.featureImage]}
+            />
+            <UnifiedImgaeinput
+              isMultiple={true}
+              fieldName="images"
+              label="Gallery Images (Max-3)"
+              setUrl={laptop.images}
+            />
+            <button className="btn btn-warning text-black  text-lg mystyle mt-6 max-w-[200px]">
+              Update Images
+            </button>
+          </form>
+        </FormProvider>
+      </div>
     </div>
   );
 };
 
-export default addnewlaptop;
+export default EditLaptop;

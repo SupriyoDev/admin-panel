@@ -14,12 +14,14 @@ interface Props {
   triggerLabel?: string;
   isNumber?: boolean;
   inputType?: "text" | "number";
+  setValue?: string;
 }
 
 const UnifiedInput = ({
   label,
   componentType,
   fieldName,
+  setValue,
   options,
   inputType = "text",
   isNumber = false,

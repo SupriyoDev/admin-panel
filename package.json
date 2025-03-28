@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "push": "drizzle-kit push",
+    "migrate": "drizzle-kit migrate",
+    "generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
