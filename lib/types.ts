@@ -166,9 +166,9 @@ export const graphicsCardSchema = z.object({
 export const powerSupplySchema = z.object({
   ...baseSchema.shape,
   category: z.literal("power-supply"),
-  smpsCertificationType: z
-    .string()
-    .min(1, { message: "choose the smps certification type" }),
+  // smpsCertificationType: z
+  //   .string()
+  //   .min(1, { message: "choose the smps certification type" }),
 });
 
 // For monitor category
@@ -177,8 +177,6 @@ export const monitorSchema = z.object({
   category: z.literal("monitor"),
   monitorType: z.string().min(1, { message: "choose the monitor type" }),
   monitorSize: z.string().min(1, { message: "choose the monitor size" }),
-  monitorRefreshRate: z.string().optional(),
-  monitorResolution: z.string().optional(),
 });
 
 // For storage category
@@ -265,6 +263,5 @@ export type desktopProductType = z.infer<typeof desktopProductFormSchema>;
 //   smpsCertificationType: varchar(),
 //   monitorType: varchar(),
 //   monitorSize: varchar(),
-//   monitorRefreshRate: varchar(),
-//   monitorResolution: varchar(),
+//
 // })

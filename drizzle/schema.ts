@@ -50,6 +50,8 @@ const categoryEnum = pgEnum("category", [
   "webcam",
   "headset",
   "speaker",
+  "cabinet",
+  "cpu-cooler",
 ]);
 
 export const desktopTable = pgTable("desktop_table", {
@@ -58,7 +60,7 @@ export const desktopTable = pgTable("desktop_table", {
   price: doublePrecision().notNull(),
   inventory: integer().notNull(),
   images: varchar().array().notNull(),
-  category: varchar().notNull().$type<typeof categoryEnum>(),
+  category: varchar().notNull(),
   productCode: varchar().notNull(),
   description: text().notNull(),
   processorGenType: varchar(),
@@ -69,9 +71,6 @@ export const desktopTable = pgTable("desktop_table", {
   ramByKit: varchar(),
   storageType: varchar(),
   storageSubType: varchar(),
-  smpsCertificationType: varchar(),
   monitorType: varchar(),
   monitorSize: varchar(),
-  monitorRefreshRate: varchar(),
-  monitorResolution: varchar(),
 });

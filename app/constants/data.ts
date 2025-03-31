@@ -19,8 +19,78 @@ export const LAPTOP_BRANDS = [
   { label: "Xiaomi", value: "xiaomi" },
   { label: "Alienware", value: "alienware" },
   { label: "Framework", value: "framework" },
-  { label: "Intel", value: "intel" },
+];
+
+export const DESKTOP_PRODUCT_BRANDS = [
+  { label: "Acer", value: "acer" },
+  { label: "ADATA", value: "adata" },
   { label: "AMD", value: "amd" },
+  { label: "Amcrest", value: "amcrest" },
+  { label: "AOC", value: "aoc" },
+  { label: "Arlo", value: "arlo" },
+  { label: "ASRock", value: "asrock" },
+  { label: "ASUS", value: "asus" },
+  { label: "Astro", value: "astro" },
+  { label: "AverMedia", value: "avermedia" },
+  { label: "be quiet!", value: "bequiet" },
+  { label: "BenQ", value: "benq" },
+  { label: "Biostar", value: "biostar" },
+  { label: "Bose", value: "bose" },
+  { label: "Cooler Master", value: "coolermaster" },
+  { label: "Corsair", value: "corsair" },
+  { label: "Creative", value: "creative" },
+  { label: "Crucial", value: "crucial" },
+  { label: "Dahua", value: "dahua" },
+  { label: "Deepcool", value: "deepcool" },
+  { label: "Dell", value: "dell" },
+  { label: "Elgato", value: "elgato" },
+  { label: "EVGA", value: "evga" },
+  { label: "EZVIZ", value: "ezviz" },
+  { label: "Fractal Design", value: "fractaldesign" },
+  { label: "G.Skill", value: "gskill" },
+  { label: "Gigabyte", value: "gigabyte" },
+  { label: "Hikvision", value: "hikvision" },
+  { label: "HP", value: "hp" },
+  { label: "HyperX", value: "hyperx" },
+  { label: "Inno3D", value: "inno3d" },
+  { label: "Intel", value: "intel" },
+  { label: "Kingston", value: "kingston" },
+  { label: "Lenovo", value: "lenovo" },
+  { label: "Lexar", value: "lexar" },
+  { label: "LG", value: "lg" },
+  { label: "Lian Li", value: "lianli" },
+  { label: "Logitech", value: "logitech" },
+  { label: "Microsoft", value: "microsoft" },
+  { label: "MSI", value: "msi" },
+  { label: "Noctua", value: "noctua" },
+  { label: "NZXT", value: "nzxt" },
+  { label: "Palit", value: "palit" },
+  { label: "Patriot", value: "patriot" },
+  { label: "Phanteks", value: "phanteks" },
+  { label: "PNY", value: "pny" },
+  { label: "PowerColor", value: "powercolor" },
+  { label: "Razer", value: "razer" },
+  { label: "Reolink", value: "reolink" },
+  { label: "Samsung", value: "samsung" },
+  { label: "SanDisk", value: "sandisk" },
+  { label: "Sapphire", value: "sapphire" },
+  { label: "Seagate", value: "seagate" },
+  { label: "Seasonic", value: "seasonic" },
+  { label: "Sennheiser", value: "sennheiser" },
+  { label: "Sony", value: "sony" },
+  { label: "SteelSeries", value: "steelseries" },
+  { label: "Swann", value: "swann" },
+  { label: "TeamGroup", value: "teamgroup" },
+  { label: "Thermaltake", value: "thermaltake" },
+  { label: "Toshiba", value: "toshiba" },
+  { label: "TP-Link", value: "tplink" },
+  { label: "Transcend", value: "transcend" },
+  { label: "Ubiquiti", value: "ubiquiti" },
+  { label: "ViewSonic", value: "viewsonic" },
+  { label: "Viper", value: "viper" },
+  { label: "Western Digital", value: "wd" },
+  { label: "XFX", value: "xfx" },
+  { label: "Zotac", value: "zotac" },
 ];
 
 export const RAM_SIZES = [
@@ -140,9 +210,8 @@ export const ramTypeOptions = [
 ];
 
 export const ramByKitOptions = [
-  { label: "Single", value: "single" },
-  { label: "Dual", value: "dual" },
-  { label: "Quad", value: "quad" },
+  { label: "Laptop Ram", value: "laptop" },
+  { label: "Desktop Ram", value: "desktop" },
 ];
 
 export const motherboardchipsetTypeOptions = [
@@ -150,7 +219,7 @@ export const motherboardchipsetTypeOptions = [
   { label: "AMD", value: "amd" },
 ];
 
-export const motherboardChipsetOptions = [
+export const amdMotherboardChipsetOptions = [
   { label: "AMD A520", value: "amd-a520" },
   { label: "AMD A620", value: "amd-a620" },
   { label: "AMD B450", value: "amd-b450" },
@@ -158,7 +227,9 @@ export const motherboardChipsetOptions = [
   { label: "AMD B650", value: "amd-b650" },
   { label: "AMD X870", value: "amd-x870" },
   { label: "AMD X670", value: "amd-x670" },
+];
 
+export const intelMotherboardChipsetOptions = [
   { label: "INTEL B760", value: "intel-b760" },
   { label: "INTEL H610", value: "intel-h610" },
   { label: "INTEL H510", value: "intel-h510" },
@@ -168,57 +239,62 @@ export const motherboardChipsetOptions = [
   { label: "INTEL Z890", value: "intel-z890" },
 ];
 
-export const graphicsCardSeriesOptions = [
-  { label: "AMD RX 9000 Series", value: "amd-rx-9000-series" },
-  { label: "AMD RX 7900 Series", value: "amd-rx-7900-series" },
-  { label: "AMD RX 7800 Series", value: "amd-rx-7800-series" },
-  { label: "AMD RX 7700 Series", value: "amd-rx-7700-series" },
-  { label: "AMD RX 7600 Series", value: "amd-rx-7600-series" },
-  { label: "AMD RX 6900 Series", value: "amd-rx-6900-series" },
-  { label: "AMD RX 6800 Series", value: "amd-rx-6800-series" },
-  { label: "AMD RX 6700 Series", value: "amd-rx-6700-series" },
-  { label: "AMD RX 6600 Series", value: "amd-rx-6600-series" },
+export const gpuOptions = [
+  // AMD RX Series (Sapphire, ASUS, Gigabyte, MSI)
+  ...["sapphire", "asus", "gigabyte", "msi"].flatMap((brand) =>
+    ["9000", "7900", "7800", "7700", "7600"].map((series) => ({
+      label: `${brand.toUpperCase()} RX ${series} Series`,
+      value: `${brand}-rx-${series}-series`,
+    }))
+  ),
 
-  // NVIDIA RTX 50 Series
-  { label: "NVIDIA RTX 5090 Series", value: "nvidia-rtx-5090-series" },
-  { label: "NVIDIA RTX 5080 Series", value: "nvidia-rtx-5080-series" },
-  { label: "NVIDIA RTX 5070 Series", value: "nvidia-rtx-5070-series" },
-  { label: "NVIDIA RTX 5060 Series", value: "nvidia-rtx-5060-series" },
-  { label: "NVIDIA RTX 5050 Series", value: "nvidia-rtx-5050-series" },
+  // NVIDIA RTX 50 Series (Zotac, Inno3D, Gigabyte, ASUS, MSI)
+  ...["zotac", "inno3d", "gigabyte", "asus", "msi"].flatMap((brand) =>
+    ["5090", "5080", "5070", "5060", "5050"].map((series) => ({
+      label: `${brand.toUpperCase()} RTX ${series} Series`,
+      value: `${brand}-rtx-${series}-series`,
+    }))
+  ),
 
   // NVIDIA RTX 40 Series
-  { label: "NVIDIA RTX 4090 Series", value: "nvidia-rtx-4090-series" },
-  { label: "NVIDIA RTX 4080 Series", value: "nvidia-rtx-4080-series" },
-  { label: "NVIDIA RTX 4070 Series", value: "nvidia-rtx-4070-series" },
-  { label: "NVIDIA RTX 4060 Series", value: "nvidia-rtx-4060-series" },
-  { label: "NVIDIA RTX 4050 Series", value: "nvidia-rtx-4050-series" },
+  ...["zotac", "inno3d", "gigabyte", "asus", "msi"].flatMap((brand) =>
+    ["4090", "4080", "4070", "4060", "4050"].map((series) => ({
+      label: `${brand.toUpperCase()} RTX ${series} Series`,
+      value: `${brand}-rtx-${series}-series`,
+    }))
+  ),
 
   // NVIDIA RTX 30 Series
-  { label: "NVIDIA RTX 3090 Series", value: "nvidia-rtx-3090-series" },
-  { label: "NVIDIA RTX 3080 Series", value: "nvidia-rtx-3080-series" },
-  { label: "NVIDIA RTX 3070 Series", value: "nvidia-rtx-3070-series" },
-  { label: "NVIDIA RTX 3060 Series", value: "nvidia-rtx-3060-series" },
-  { label: "NVIDIA RTX 3050 Series", value: "nvidia-rtx-3050-series" },
+  ...["zotac", "inno3d", "gigabyte", "asus", "msi"].flatMap((brand) =>
+    ["3090", "3080", "3070", "3060", "3050"].map((series) => ({
+      label: `${brand.toUpperCase()} RTX ${series} Series`,
+      value: `${brand}-rtx-${series}-series`,
+    }))
+  ),
 
-  // NVIDIA GTX Series
-  { label: "NVIDIA GTX 1660 Series", value: "nvidia-gtx-1660-series" },
-  { label: "NVIDIA GTX 1650 Series", value: "nvidia-gtx-1650-series" },
-  { label: "NVIDIA GTX 1080 Series", value: "nvidia-gtx-1080-series" },
-  { label: "NVIDIA GTX 1070 Series", value: "nvidia-gtx-1070-series" },
-  { label: "NVIDIA GTX 1060 Series", value: "nvidia-gtx-1060-series" },
-  { label: "NVIDIA GTX 1050 Series", value: "nvidia-gtx-1050-series" },
-  { label: "NVIDIA GTX 980 Series", value: "nvidia-gtx-980-series" },
-  { label: "NVIDIA GTX 970 Series", value: "nvidia-gtx-970-series" },
-  { label: "NVIDIA GTX 960 Series", value: "nvidia-gtx-960-series" },
-  { label: "NVIDIA GTX 950 Series", value: "nvidia-gtx-950-series" },
-  { label: "NVIDIA GTX 780 Series", value: "nvidia-gtx-780-series" },
-  { label: "NVIDIA GTX 770 Series", value: "nvidia-gtx-770-series" },
-  { label: "NVIDIA GTX 760 Series", value: "nvidia-gtx-760-series" },
-  { label: "NVIDIA GTX 750 Series", value: "nvidia-gtx-750-series" },
-  { label: "NVIDIA GTX 680 Series", value: "nvidia-gtx-680-series" },
-  { label: "NVIDIA GTX 670 Series", value: "nvidia-gtx-670-series" },
-  { label: "NVIDIA GTX 660 Series", value: "nvidia-gtx-660-series" },
-  { label: "NVIDIA GTX 650 Series", value: "nvidia-gtx-650-series" },
+  // NVIDIA GTX 20 Series
+  ...["zotac", "inno3d", "gigabyte", "asus", "msi"].flatMap((brand) =>
+    ["2080", "2070", "2060", "2050"].map((series) => ({
+      label: `${brand.toUpperCase()} GTX ${series} Series`,
+      value: `${brand}-gtx-${series}-series`,
+    }))
+  ),
+
+  // NVIDIA GTX 10 Series
+  ...["zotac", "inno3d", "gigabyte", "asus", "msi"].flatMap((brand) =>
+    ["1080", "1070", "1060", "1050"].map((series) => ({
+      label: `${brand.toUpperCase()} GTX ${series} Series`,
+      value: `${brand}-gtx-${series}-series`,
+    }))
+  ),
+
+  // NVIDIA GTX 1660 Series
+  ...["zotac", "inno3d", "gigabyte", "asus", "msi"].flatMap((brand) =>
+    ["1660"].map((series) => ({
+      label: `${brand.toUpperCase()} GTX ${series} Series`,
+      value: `${brand}-gtx-${series}-series`,
+    }))
+  ),
 ];
 
 export const smpsCertificationTypeOptions = [
@@ -247,16 +323,18 @@ export const storageTypeOptions = [
   { label: "HDD", value: "hdd" },
 ];
 
-export const storageCategoriesOptions = [
-  // HDD Options
-  { label: "External Hard Drive", value: "external-hard-drive" },
-  { label: "Internal Hard Drive", value: "internal-hard-drive" },
-  { label: "Enterprise Hard Drive", value: "enterprise-hard-drive" },
-
+export const ssdCategoriesOptions = [
   // SSD Options
   { label: "SATA 2.5 Inch SSD", value: "sata-2-5-inch-ssd" },
   { label: "NVMe Gen3 SSD", value: "nvme-gen3-ssd" },
   { label: "NVMe Gen4 SSD", value: "nvme-gen4-ssd" },
   { label: "NVMe Gen5 SSD", value: "nvme-gen5-ssd" },
   { label: "External SSD", value: "external-ssd" },
+];
+
+export const hddCategoriesOptions = [
+  //hdd options
+  { label: "External Hard Drive", value: "external-hard-drive" },
+  { label: "Internal Hard Drive", value: "internal-hard-drive" },
+  { label: "Enterprise Hard Drive", value: "enterprise-hard-drive" },
 ];
