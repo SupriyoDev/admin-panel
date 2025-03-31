@@ -22,7 +22,7 @@ const GetAllLaptop = async () => {
     );
   return (
     <div className=" w-full">
-      <div className=" w-full">
+      <div className=" w-full grid grid-cols-4">
         {res.length > 0 &&
           res.map((laptop) => <LaptopCard laptop={laptop} key={laptop.id} />)}
       </div>

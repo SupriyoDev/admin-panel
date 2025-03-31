@@ -32,8 +32,8 @@ export async function ImageCompressor(
 // upload to cloudinary
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUD_NAME,
-  api_key: process.env.NEXT_PUBLIC_API_KEY,
-  api_secret: process.env.NEXT_PUBLIC_API_SECRET,
+  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+  api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
 });
 
 export async function UploadToCloudinary(image: string, folder: string) {
@@ -130,9 +130,11 @@ export async function POST(req: NextRequest) {
     } catch (error) {
       return NextResponse.json({
         message: "error",
+        error,
       });
     }
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ message: "Internal server error" });
   }
 }

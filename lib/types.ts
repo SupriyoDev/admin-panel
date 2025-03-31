@@ -107,3 +107,164 @@ export const laptopImgsSchema = z.object({
   featureImage: featureImageSchema,
   images: galleryImagesSchema,
 });
+
+/// ALL SCHEMAS FOR DESKTOP CATEGORY PRODUCTS
+
+export const baseSchema = z.object({
+  name: z.string().min(3, "product name should be atleast 3 characters"),
+  brand: z.string().min(2, "Brand name is required"),
+  price: z
+    .number({ message: "Enter the product price" })
+    .min(1, "Enter the product price"),
+  inventory: z
+    .number({ message: " Total stocks in number" })
+    .min(1, "Total stocks of this product"),
+  images: galleryImagesSchema,
+  productCode: z.string().min(1, { message: "product code is required" }),
+  description: z
+    .string()
+    .min(10, { message: "Description must be at least 10 characters" }),
+});
+
+// For processor category
+export const processorSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("processor"),
+  processorGenType: z.string().min(1, { message: "choose the processor type" }),
+});
+
+// For RAM category
+export const ramSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("ram"),
+  ramType: z.string().min(1, { message: "choose the ram type" }),
+  ramByKit: z.string().min(1, { message: "choose the ram by kit" }),
+});
+
+// For motherboard category
+export const motherboardSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("motherboard"),
+  motherboardChipset: z
+    .string()
+    .min(1, { message: "choose the motherboard chipset" }),
+  motherboardChipsetType: z
+    .string()
+    .min(1, { message: "choose the motherboard chipset type" }),
+});
+
+// For graphics card category
+export const graphicsCardSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("graphics-card"),
+  graphicsCardSeries: z
+    .string()
+    .min(1, { message: "choose the graphics card series" }),
+});
+
+// For power supply category
+export const powerSupplySchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("power-supply"),
+  smpsCertificationType: z
+    .string()
+    .min(1, { message: "choose the smps certification type" }),
+});
+
+// For monitor category
+export const monitorSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("monitor"),
+  monitorType: z.string().min(1, { message: "choose the monitor type" }),
+  monitorSize: z.string().min(1, { message: "choose the monitor size" }),
+  monitorRefreshRate: z.string().optional(),
+  monitorResolution: z.string().optional(),
+});
+
+// For storage category
+export const storageSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("storage"),
+  storageType: z.string().min(1, { message: "choose the storage type" }),
+  storageSubType: z.string().min(1, { message: "choose the storage subtype" }),
+});
+
+// For base categories with no extra fields
+// We need to create individual schemas for each type to work with discriminatedUnion
+export const keyboardSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("keyboard"),
+});
+
+export const mouseSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("mouse"),
+});
+
+export const webcamSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("webcam"),
+});
+
+export const headsetSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("headset"),
+});
+
+export const speakerSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("speaker"),
+});
+
+export const cabinetSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("cabinet"),
+});
+
+export const cpuCoolerSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("cpu-cooler"),
+});
+
+// Combine schemas for conditional validation
+export const desktopProductFormSchema = z.discriminatedUnion("category", [
+  processorSchema,
+  ramSchema,
+  motherboardSchema,
+  graphicsCardSchema,
+  powerSupplySchema,
+  monitorSchema,
+  storageSchema,
+  keyboardSchema,
+  mouseSchema,
+  webcamSchema,
+  headsetSchema,
+  speakerSchema,
+  cabinetSchema,
+  cpuCoolerSchema,
+]);
+
+export type desktopProductType = z.infer<typeof desktopProductFormSchema>;
+
+//  name: varchar().notNull(),
+//   brand: varchar().notNull(),
+//   price: doublePrecision().notNull(),
+//   inventory: integer().notNull(),
+//   images: varchar().array().notNull(),
+//   category: varchar().notNull().$type<typeof categoryEnum>(),
+//   productCode: varchar().notNull(),
+//   description: text().notNull(),
+//   processorGenType: varchar(),
+//   motherboardChipset: varchar(),
+//   motherboardChipsetType: varchar(),
+//   graphicsCardSeries: varchar(),
+//   ramType: varchar(),
+//   ramByKit: varchar(),
+//   storageType: varchar(),
+//   storageSubType: varchar(),
+//   smpsCertificationType: varchar(),
+//   monitorType: varchar(),
+//   monitorSize: varchar(),
+//   monitorRefreshRate: varchar(),
+//   monitorResolution: varchar(),
+// })
