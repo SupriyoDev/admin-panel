@@ -12,9 +12,9 @@ const LaptopCard = ({ laptop }: { laptop: laptopResponseType }) => {
           alt={laptop.name}
           width={100}
           height={100}
-          className="object-cover w-full h-[250px] rounded-lg"
+          className="object-contain w-full h-[250px] rounded-lg"
         />
-        {/* {laptop.images.map((image, i) => (
+        {laptop.images.map((image, i) => (
           <Image
             src={image}
             alt={image}
@@ -22,7 +22,8 @@ const LaptopCard = ({ laptop }: { laptop: laptopResponseType }) => {
             height={100}
             className="object-cover w-[105px] rounded-lg"
           />
-        ))} */}
+        ))}
+        <img src={laptop.featureImage} alt="" width={300} height={300} />
       </div>
 
       <div className="card-body">

@@ -10,7 +10,7 @@ import {
   RAM_SIZES,
   ROM_SIZES,
   ROM_TYPES,
-} from "../constants/data";
+} from "../../constants/data";
 import axios from "axios";
 import UnifiedImgaeinput from "./unifiedImageInput";
 import UnifiedInput from "./UnifiedInput";
