@@ -16,7 +16,7 @@ import {
   ramTypeOptions,
   ssdCategoriesOptions,
   storageTypeOptions,
-} from "@/app/constants/data";
+} from "@/constants/data";
 import { desktopProductFormSchema, desktopProductType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
