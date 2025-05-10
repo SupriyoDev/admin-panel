@@ -1,43 +1,50 @@
+"use client";
 import * as z from "zod";
 
 const MAX_SIZE = 2 * 1024 * 1024;
 const MAX_FILES = 3;
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/webp", "image/jpg"];
 
-export const featureImageSchema = z
-  .instanceof(FileList)
-  .refine((files) => files.length > 0, {
-    message: "Please select at least one image file",
-  })
-  .refine((files) => files.length < 2, {
-    message: `Max 1 images are allowed`,
-  })
-  .refine((files) => files[0]?.size <= MAX_SIZE, {
-    message: `Max image size is ${MAX_SIZE / (1024 * 1024)}mb`,
-  })
-  .refine((files) => IMAGE_TYPES.includes(files[0]?.type), {
-    message: "Only .jpg, .jpeg, .png and .webp formats are supported",
-  });
+const isBrowser = typeof window !== "undefined";
 
-export const galleryImagesSchema = z
-  .instanceof(FileList)
-  .refine((files) => files.length > 0, {
-    message: "Please select at least one image file",
-  })
-  .refine((files) => files.length <= MAX_FILES, {
-    message: `Max ${MAX_FILES} images are allowed`,
-  })
-  .refine(
-    (files) => Array.from(files).every((file) => file?.size <= MAX_SIZE),
-    {
-      message: `Each images shouldn't exceed ${MAX_SIZE}mb`,
-    }
-  )
-  .refine(
-    (files) =>
-      Array.from(files).every((file) => IMAGE_TYPES.includes(file?.type)),
-    { message: "Only .jpg, .jpeg, .png and .webp formats are supported" }
-  );
+export const featureImageSchema = isBrowser
+  ? z
+      .instanceof(FileList)
+      .refine((files) => files.length > 0, {
+        message: "Please select at least one image file",
+      })
+      .refine((files) => files.length < 2, {
+        message: `Max 1 images are allowed`,
+      })
+      .refine((files) => files[0]?.size <= MAX_SIZE, {
+        message: `Max image size is ${MAX_SIZE / (1024 * 1024)}mb`,
+      })
+      .refine((files) => IMAGE_TYPES.includes(files[0]?.type), {
+        message: "Only .jpg, .jpeg, .png and .webp formats are supported",
+      })
+  : z.any();
+
+export const galleryImagesSchema = isBrowser
+  ? z
+      .instanceof(FileList)
+      .refine((files) => files.length > 0, {
+        message: "Please select at least one image file",
+      })
+      .refine((files) => files.length <= MAX_FILES, {
+        message: `Max ${MAX_FILES} images are allowed`,
+      })
+      .refine(
+        (files) => Array.from(files).every((file) => file?.size <= MAX_SIZE),
+        {
+          message: `Each images shouldn't exceed ${MAX_SIZE}mb`,
+        }
+      )
+      .refine(
+        (files) =>
+          Array.from(files).every((file) => IMAGE_TYPES.includes(file?.type)),
+        { message: "Only .jpg, .jpeg, .png and .webp formats are supported" }
+      )
+  : z.any();
 
 export const laptopFormSchema = z.object({
   name: z.string().min(3, "product name should be atleast 3 characters"),
@@ -103,10 +110,12 @@ export const laptopDetailsSchema = z.object({
   useType: z.string({ message: "choose the usage type" }),
 });
 
-export const laptopImgsSchema = z.object({
-  featureImage: featureImageSchema,
-  images: galleryImagesSchema,
-});
+export const laptopImgsSchema = isBrowser
+  ? z.object({
+      featureImage: featureImageSchema,
+      images: galleryImagesSchema,
+    })
+  : z.any();
 
 /// ALL SCHEMAS FOR DESKTOP CATEGORY PRODUCTS
 

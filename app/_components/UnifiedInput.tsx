@@ -1,3 +1,5 @@
+"use client";
+
 import { FieldError, useFormContext } from "react-hook-form";
 import FormError from "./formError";
 

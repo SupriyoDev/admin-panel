@@ -41,8 +41,8 @@ const addnewlaptop = () => {
     formdata.append("romtype", data.romtype);
     formdata.append("useType", data.useType);
     formdata.append("featureImage", data.featureImage[0]);
-    Array.from(data.images).forEach((image) =>
-      formdata.append(`images`, image)
+    (Array.from(data.images) as File[]).forEach((image) =>
+      formdata.append(`images`, image as File)
     );
 
     try {

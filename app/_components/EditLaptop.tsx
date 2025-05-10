@@ -29,7 +29,10 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
   //     ...laptop,
   //   },
   // });
-  const imageMethod = useForm<LaptopImgs>({
+  const imageMethod = useForm<{
+    featureImage: File[] | FileList;
+    images: File[] | FileList;
+  }>({
     resolver: zodResolver(laptopImgsSchema),
   });
 
@@ -58,13 +61,19 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
     }
   };
 
-  const OnImageSubmit = async (data: LaptopImgs) => {
+  const OnImageSubmit = async ({
+    featureImage,
+    images,
+  }: {
+    featureImage: FileList | File[];
+    images: FileList | File[];
+  }) => {
     const formdata = new FormData();
     formdata.append("id", laptop.id);
-    formdata.append("featureImage", data.featureImage[0]);
-    Array.from(data.images).forEach((image, i) =>
-      formdata.append(`images`, image)
-    );
+    formdata.append("featureImage", featureImage[0]);
+    (Array.from(images) as File[]).forEach((image) => {
+      formdata.append(`images`, image as File);
+    });
 
     try {
       await axios.post("/api/laptopImg", formdata, {
@@ -72,8 +81,9 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
           "Content-Type": "multipart/form-data",
         },
       });
+      toast.success("Images updated successfully!");
     } catch (error) {
-    } finally {
+      toast.error("Failed to update images");
     }
   };
 

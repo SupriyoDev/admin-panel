@@ -27,8 +27,6 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export const dynamic = "force-dynamic";
-
 const AllowedTypes = ["image/jpg", "image/jpeg", "image/png"];
 const MAX_SIZE = 2 * 1024 * 1024;
 
@@ -420,6 +418,7 @@ const DesktopPage = () => {
 };
 
 export default DesktopPage;
+export const dynamic = "force-dynamic";
 
 //  "processor",
 //   "ram",

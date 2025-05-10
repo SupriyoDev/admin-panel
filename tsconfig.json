@@ -29,5 +29,9 @@
     ".next/types/**/*.ts",
     "app/seed.mjs"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "app/_components/addnewlaptop.tsx",
+    "app/_components/EditLaptop.tsx"
+  ]
 }
