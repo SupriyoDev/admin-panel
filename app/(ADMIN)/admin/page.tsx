@@ -1,8 +1,12 @@
+// "use client";
+
 import { Laptop } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import AddNewLaptop from "../../_components/addnewlaptop";
+
+// export const dynamic = "force-dynamic";
 
 const AdminPage = () => {
   return (

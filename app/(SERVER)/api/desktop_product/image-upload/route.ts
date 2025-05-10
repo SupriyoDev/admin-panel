@@ -21,7 +21,8 @@ export async function POST(req: NextRequest) {
   try {
     //session check
     const { userId } = await auth();
-    if (!userId) return { error: "Unauthorized user" };
+    if (!userId)
+      return NextResponse.json({ error: "Unauthorized user" }, { status: 401 });
 
     //perform task
 
@@ -64,7 +65,7 @@ async function ImageCompressor(file: File, quality = 90, maxwidth = 800) {
 
 ///UPLOAD TO CLOUDINARY
 
-export async function UploadToCloudinary(file: string) {
+async function UploadToCloudinary(file: string) {
   try {
     const res = await cloudinary.uploader.upload(file, {
       folder: imageFolder,

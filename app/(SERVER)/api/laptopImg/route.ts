@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   try {
     //session check
     const { userId } = await auth();
-    if (!userId) return { error: "Unauthorized user" };
+    if (!userId) return NextResponse.json({ error: "Unauthorized user" });
 
     //perform task
 

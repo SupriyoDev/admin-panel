@@ -7,7 +7,8 @@ export async function POST(req: NextRequest) {
   try {
     //session check
     const { userId } = await auth();
-    if (!userId) return { error: "Unauthorized user" };
+    if (!userId)
+      return NextResponse.json({ error: "Unauthorized user" }, { status: 401 });
 
     //perform task
 
@@ -40,11 +41,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     //session check
     const { userId } = await auth();
-    if (!userId) return { error: "Unauthorized user" };
+    if (!userId)
+      return NextResponse.json({ error: "Unauthorized user" }, { status: 401 });
 
     //perform task
 
