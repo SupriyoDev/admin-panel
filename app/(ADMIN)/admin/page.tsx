@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import AddNewLaptop from "../../_components/addnewlaptop";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const AdminPage = () => {
   return (
@@ -15,7 +16,9 @@ const AdminPage = () => {
           </span>{" "}
         </h3>
         <Link href={"/admin/allLaptop"}>
-          <button className="btn btn-primary rounded-md">All Laptop</button>
+          <Button className=" text-lg">
+            All Laptop <Laptop className="w-9 h-9" />
+          </Button>
         </Link>
       </div>
 

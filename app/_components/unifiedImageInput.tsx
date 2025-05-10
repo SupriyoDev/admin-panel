@@ -64,14 +64,16 @@ const UnifiedImgaeinput = ({
     <div className="flex flex-col gap-2">
       <label htmlFor={fieldName}>{label}</label>
 
-      <div className="flex gap-4">
-        <input
-          {...props}
-          {...register(fieldName)}
-          type="file"
-          multiple={isMultiple}
-          className="file-input file-input-primary mystyle"
-        />
+      <div className="flex gap-4 ">
+        <div className="bg-primary w-[500px] py-3 px-3 rounded-lg ">
+          <input
+            {...props}
+            {...register(fieldName)}
+            type="file"
+            multiple={isMultiple}
+            className="bg-primary   text-white border-2 border-dashed w-full px-4"
+          />
+        </div>
         {previewUrl && previewUrl.length > 0 && (
           <button
             onClick={() => handleReset()}

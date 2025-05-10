@@ -15,12 +15,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { cn } from "../../lib/utils";
+import { SignOutButton } from "@clerk/nextjs";
+import { LogOut } from "lucide-react";
 
 const sidebarLinks = [
   { title: "laptop", href: "/admin", icon: Laptop },
   { title: "desktop", href: "/admin/desktop", icon: MonitorCheck },
   { title: "category", href: "/admin/category", icon: Tags },
-  { title: "brands", href: "/admin/brands", icon: PackageCheck },
   { title: "collections", href: "/admin/collections", icon: LibraryBig },
 ];
 
@@ -28,7 +29,7 @@ const Sidebar = () => {
   const activePath = usePathname();
 
   return (
-    <div className=" fixed top-0 left-0  w-56 bg-base-200 h-full  md:flex hidden border-primary/30 border-r ">
+    <div className="  flex-col justify-between fixed top-0 left-0  w-56 bg-base-200 h-full  md:flex hidden border-primary/30 border-r ">
       <div className="   pt-0 pb-6 w-full">
         <h3 className="text-center font-bold text-2xl text-primary-content py-4 bg-primary">
           Das Infotech
@@ -52,6 +53,15 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
+
+      <SignOutButton>
+        <div className="mb-24  gap-4 px-10 flex items-center rounded-md hover:bg-primary mx-2 h-12 hover:text-white">
+          <span>
+            <LogOut />
+          </span>{" "}
+          <span className="text-xl ">Logout</span>
+        </div>
+      </SignOutButton>
     </div>
   );
 };

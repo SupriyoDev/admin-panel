@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import { ImageCompressor, UploadToCloudinary } from "../laptop/route";
+import { db } from "@/drizzle/db";
+import { laptopTable } from "@/drizzle/schema";
 import { BufferToBase64 } from "@/lib/utils";
 import { v2 as cloudinary } from "cloudinary";
-import { db } from "@/drizzle/db";
 import { eq } from "drizzle-orm";
-import { laptopTable } from "@/drizzle/schema";
+import { NextRequest, NextResponse } from "next/server";
+import { ImageCompressor, UploadToCloudinary } from "../laptop/route";
+import { auth } from "@clerk/nextjs/server";
 
 // https://res.cloudinary.com/dgfqenqkj/image/upload/v1743083873/feature-image/elvfhozg1rtixnqcvgnh.webp
 // From this we want to get the below --
@@ -22,6 +23,12 @@ function ExtractPublicId(urls: string[]) {
 
 export async function POST(req: NextRequest) {
   try {
+    //session check
+    const { userId } = await auth();
+    if (!userId) return { error: "Unauthorized user" };
+
+    //perform task
+
     const data = await req.formData();
 
     const id = data.get("id") as string;

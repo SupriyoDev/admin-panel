@@ -20,8 +20,12 @@ import {
 import axios from "axios";
 import UnifiedImgaeinput from "./unifiedImageInput";
 import UnifiedInput from "./UnifiedInput";
-import { useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import Link from "next/link";
+import { updateLaptopPriceAction } from "@/lib/actions";
+import { Input } from "@/components/ui/input";
+import toast from "react-hot-toast";
+import { error } from "console";
 
 export type LaptopDetails = Omit<LaptopformType, "featureImage" | "images">;
 export type LaptopImgs = Pick<LaptopformType, "featureImage" | "images">;
@@ -29,28 +33,38 @@ export type LaptopImgs = Pick<LaptopformType, "featureImage" | "images">;
 const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
   const [isLoading, setLoading] = useState(false);
   const [isOpen, setOpen] = useState(true);
+  const inputref = useRef<HTMLInputElement>(null);
 
-  const detailMethod = useForm<LaptopDetails>({
-    resolver: zodResolver(laptopDetailsSchema),
-    defaultValues: {
-      ...laptop,
-    },
-  });
+  // const detailMethod = useForm<LaptopDetails>({
+  //   resolver: zodResolver(laptopDetailsSchema),
+  //   defaultValues: {
+  //     ...laptop,
+  //   },
+  // });
   const imageMethod = useForm<LaptopImgs>({
     resolver: zodResolver(laptopImgsSchema),
   });
 
-  const OnSubmit = async (data: LaptopDetails) => {
+  const HandleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setLoading(true);
 
     try {
-      const res = await axios.put("/api/laptop", data);
+      e.preventDefault();
+      const formdata = new FormData();
+      if (inputref.current) {
+        formdata.append("laptop_id", laptop.id);
+        formdata.append("laptop_price", inputref.current.value);
+      }
 
-      console.log(res.data);
-      setLoading(false);
+      const res = await updateLaptopPriceAction(formdata);
+
+      if (res.error) {
+        toast.error(res.error);
+      } else {
+        toast.success(res.message!);
+      }
     } catch (error) {
-      console.log(error);
-      setLoading(false);
+      toast.error("Something went wrong!");
     } finally {
       setLoading(false);
     }
@@ -77,17 +91,17 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
 
   return (
     <div className="h-screen ">
-      <FormProvider {...detailMethod}>
-        <form onSubmit={detailMethod.handleSubmit(OnSubmit)} className=" ">
-          <div className=" flex gap-4 w-full justify-between">
-            <h2 className=" bg-slate-700  text-white px-8 py-3 text-lg rounded-lg mb-8">
-              Update Laptop Details :
-            </h2>
-            <Link href={"/admin/allLaptop"}>
-              <button className=" btn btn-primary rounded-lg ">Back</button>
-            </Link>
-          </div>
-          <div className=" grid grid-cols-2 gap-8">
+      {/* <FormProvider {...detailMethod}> */}
+      <div className=" flex gap-4 w-full justify-between">
+        <h2 className=" bg-slate-700  text-white px-8 py-3 text-lg rounded-lg mb-8">
+          Update Laptop Details :
+        </h2>
+        <Link href={"/admin/allLaptop"}>
+          <button className=" btn btn-primary rounded-lg ">Back</button>
+        </Link>
+      </div>
+      <form onSubmit={HandleSubmit} className=" ">
+        {/* <div className=" grid grid-cols-2 gap-8">
             <UnifiedInput
               componentType="input"
               fieldName="name"
@@ -166,16 +180,26 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
               options={LAPTOP_USE_TYPE}
               setValue={laptop.useType}
             />
-          </div>
+          </div> */}
 
-          <button
-            disabled={isLoading}
-            className="btn btn-warning text-black  text-lg mystyle mt-6 max-w-[200px]  "
-          >
-            Update Details
-          </button>
-        </form>
-      </FormProvider>
+        <Input
+          className=" border-2 border-amber-400"
+          ref={inputref}
+          step="any"
+          type="number"
+          required
+          placeholder="Update Laptop Price"
+        />
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="btn btn-warning text-black  text-lg mystyle mt-6 max-w-[200px]  "
+        >
+          {isLoading ? "Updating price..." : "Update Price"}
+        </button>
+      </form>
+      {/* </FormProvider> */}
 
       <div className="mt-20 py-10">
         <h3 className="bg-slate-700 text-white px-8 py-3 text-lg rounded-lg mb-8">
@@ -194,7 +218,10 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
               label="Gallery Images (Max-3)"
               setUrl={laptop.images}
             />
-            <button className="btn btn-warning text-black  text-lg mystyle mt-6 max-w-[200px]">
+            <button
+              type="submit"
+              className="btn btn-warning text-black  text-lg mystyle mt-6 max-w-[200px]"
+            >
               Update Images
             </button>
           </form>

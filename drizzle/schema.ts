@@ -55,6 +55,7 @@ const categoryEnum = pgEnum("category", [
 ]);
 
 export const desktopTable = pgTable("desktop_table", {
+  id: uuid().primaryKey().notNull().defaultRandom(),
   name: varchar().notNull(),
   brand: varchar().notNull(),
   price: doublePrecision().notNull(),
@@ -74,3 +75,5 @@ export const desktopTable = pgTable("desktop_table", {
   monitorType: varchar(),
   monitorSize: varchar(),
 });
+
+export type DesktopProductResponse = (typeof desktopTable.$inferSelect)[];

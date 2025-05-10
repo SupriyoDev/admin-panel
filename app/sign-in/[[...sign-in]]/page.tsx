@@ -1,14 +1,8 @@
-import { SignInButton, useAuth } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
-import { LogIn, LogOut } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
+import { SignIn } from "@clerk/nextjs";
 
-const Home = async () => {
-  const { sessionId } = await auth();
-  if (sessionId !== null) redirect("/admin");
-
+export default function Page() {
   return (
-    <div className="w-full h-screen bg-primary ">
+    <div className=" w-full bg-primary">
       <div className=" w-full grid grid-cols-5 h-screen ">
         {/* side 1  */}
         <div className="col-span-3">
@@ -30,14 +24,7 @@ const Home = async () => {
             Admin Panel
           </p>
           <div className="flex mt-10">
-            <SignInButton>
-              <button className="btn  rounded-md btn-xl btn-soft">
-                <span>
-                  <LogIn />
-                </span>
-                Log In
-              </button>
-            </SignInButton>
+            <SignIn />
           </div>
         </div>
 
@@ -45,6 +32,4 @@ const Home = async () => {
       </div>
     </div>
   );
-};
-
-export default Home;
+}

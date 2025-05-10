@@ -80,7 +80,7 @@ const UnifiedInput = ({
                 type="radio"
                 id={fieldName}
                 value={option.value}
-                className="radio radio-primary"
+                className=""
               />
             </label>
           ))}

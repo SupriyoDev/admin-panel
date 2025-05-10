@@ -7,6 +7,10 @@ import { db } from "@/drizzle/db";
 import { laptopTable } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { LaptopDetails } from "@/app/_components/EditLaptop";
+import { auth } from "@clerk/nextjs/server";
+
+const imageFolder = "images";
+const featureimageFolder = "feature-image";
 
 export const config = {
   api: {
@@ -57,6 +61,12 @@ export async function RemoveFromCloudinary(images: string[]) {
 
 export async function POST(req: NextRequest) {
   try {
+    //session check
+    const { userId } = await auth();
+    if (!userId) return { error: "Unauthorized user" };
+
+    //perform task
+
     const data = await req.formData();
 
     const {
@@ -93,7 +103,7 @@ export async function POST(req: NextRequest) {
 
     const featureImageUrl = await UploadToCloudinary(
       base64ImageString,
-      "feature-image"
+      featureimageFolder
     );
 
     //handle additional images
@@ -102,7 +112,7 @@ export async function POST(req: NextRequest) {
       images.map(async (image) => {
         const compressImage = await ImageCompressor(image, 600, 65);
         const base64String = await BufferToBase64(compressImage);
-        const imgUrl = await UploadToCloudinary(base64String, "images");
+        const imgUrl = await UploadToCloudinary(base64String, imageFolder);
         return imgUrl;
       })
     );
@@ -139,25 +149,24 @@ export async function POST(req: NextRequest) {
   }
 }
 
-//edit Laptop details
+//Get Laptop details
 
-export async function PUT(req: NextRequest) {
+export async function GET() {
   try {
-    const data: LaptopDetails & { id: string } = await req.json();
+    //session check
+    const { userId } = await auth();
+    if (!userId) return { error: "Unauthorized user" };
 
-    await db
-      .update(laptopTable)
-      .set({
-        ...data,
-      })
-      .where(eq(laptopTable.id, data.id));
+    //perform task
+
+    const res = await db.select().from(laptopTable);
 
     return NextResponse.json({
-      message: "Laptop details Updated Successfully",
+      message: "Laptop data fetched successfully",
+      products: res,
     });
   } catch (error) {
-    return NextResponse.json({
-      message: "Internal server error",
-    });
+    console.log(error);
+    return NextResponse.json({ message: "Internal server error" });
   }
 }

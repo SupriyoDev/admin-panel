@@ -1,4 +1,5 @@
 import GetAllLaptop from "@/app/_components/GetAllLaptop";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 
@@ -10,7 +11,7 @@ const AllLaptop = () => {
           All Stocks
         </h3>
         <Link href={"/admin"}>
-          <button className=" btn btn-primary rounded-lg">Back</button>
+          <Button className=" ">Back</Button>
         </Link>
       </div>
       <GetAllLaptop />

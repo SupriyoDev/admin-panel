@@ -119,7 +119,7 @@ export const baseSchema = z.object({
   inventory: z
     .number({ message: " Total stocks in number" })
     .min(1, "Total stocks of this product"),
-  images: galleryImagesSchema,
+
   productCode: z.string().min(1, { message: "product code is required" }),
   description: z
     .string()
