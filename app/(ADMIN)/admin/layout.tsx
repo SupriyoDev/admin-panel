@@ -1,6 +1,5 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import Sidebar from "../../_components/Sidebar";
-import { SignOutButton } from "@clerk/nextjs";
 
 const AdminLayout = ({ children }: PropsWithChildren) => {
   return (

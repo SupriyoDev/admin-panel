@@ -1,22 +1,10 @@
 "use client";
 
-import {
-  Computer,
-  Laptop,
-  Laptop2,
-  Layers2,
-  LibraryBig,
-  Link2,
-  MonitorCheck,
-  PackageCheck,
-  Tags,
-} from "lucide-react";
+import { SignOutButton } from "@clerk/nextjs";
+import { Laptop, LibraryBig, LogOut, MonitorCheck, Tags } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 import { cn } from "../../lib/utils";
-import { SignOutButton } from "@clerk/nextjs";
-import { LogOut } from "lucide-react";
 
 const sidebarLinks = [
   { title: "laptop", href: "/admin", icon: Laptop },

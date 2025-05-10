@@ -40,8 +40,10 @@ const CustomSelect = ({ filterOptions }: Props) => {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Desktop Product Category</SelectLabel>
-              {desktopProductCategory.map((product) => (
-                <SelectItem value={product.value}>{product.label}</SelectItem>
+              {desktopProductCategory.map((product, i) => (
+                <SelectItem value={product.value} key={i}>
+                  {product.label}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>

@@ -1,8 +1,7 @@
+import { auth } from "@clerk/nextjs/server";
+import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
-import { v2 as cloudinary } from "cloudinary";
-import { randomUUID } from "crypto";
-import { auth } from "@clerk/nextjs/server";
 
 const {
   NEXT_PUBLIC_CLOUDINARY_API_KEY,

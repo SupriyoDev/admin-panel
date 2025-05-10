@@ -1,13 +1,11 @@
-import { BufferToBase64 } from "@/lib/utils";
-import { NextRequest, NextResponse } from "next/server";
-import sharp from "sharp";
-import { v2 as cloudinary } from "cloudinary";
-import "dotenv/config";
 import { db } from "@/drizzle/db";
 import { laptopTable } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
-import { LaptopDetails } from "@/app/_components/EditLaptop";
+import { BufferToBase64 } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
+import { v2 as cloudinary } from "cloudinary";
+import "dotenv/config";
+import { NextRequest, NextResponse } from "next/server";
+import sharp from "sharp";
 
 const imageFolder = "images";
 const featureimageFolder = "feature-image";

@@ -1,8 +1,10 @@
 "use client";
 
-import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { laptopFormSchema, LaptopformType } from "../../lib/types";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import {
   LAPTOP_BRANDS,
   LAPTOP_USE_TYPE,
@@ -11,11 +13,9 @@ import {
   ROM_SIZES,
   ROM_TYPES,
 } from "../../constants/data";
-import axios from "axios";
+import { laptopFormSchema, LaptopformType } from "../../lib/types";
 import UnifiedImgaeinput from "./unifiedImageInput";
 import UnifiedInput from "./UnifiedInput";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
 
 const addnewlaptop = () => {
   const [isLoading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ const addnewlaptop = () => {
     formdata.append("romtype", data.romtype);
     formdata.append("useType", data.useType);
     formdata.append("featureImage", data.featureImage[0]);
-    Array.from(data.images).forEach((image, i) =>
+    Array.from(data.images).forEach((image) =>
       formdata.append(`images`, image)
     );
 

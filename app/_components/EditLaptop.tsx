@@ -1,31 +1,19 @@
 "use client";
 
-import { FormProvider, useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { updateLaptopPriceAction } from "@/lib/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import Link from "next/link";
+import { FormEvent, useRef, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import {
-  laptopDetailsSchema,
-  laptopFormSchema,
   LaptopformType,
   laptopImgsSchema,
   laptopResponseType,
 } from "../../lib/types";
-import {
-  LAPTOP_BRANDS,
-  LAPTOP_USE_TYPE,
-  PROCESSOR_LISTS,
-  RAM_SIZES,
-  ROM_SIZES,
-  ROM_TYPES,
-} from "../../constants/data";
-import axios from "axios";
 import UnifiedImgaeinput from "./unifiedImageInput";
-import UnifiedInput from "./UnifiedInput";
-import { FormEvent, useRef, useState } from "react";
-import Link from "next/link";
-import { updateLaptopPriceAction } from "@/lib/actions";
-import { Input } from "@/components/ui/input";
-import toast from "react-hot-toast";
-import { error } from "console";
 
 export type LaptopDetails = Omit<LaptopformType, "featureImage" | "images">;
 export type LaptopImgs = Pick<LaptopformType, "featureImage" | "images">;

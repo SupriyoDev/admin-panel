@@ -29,6 +29,8 @@ export async function POST(req: NextRequest) {
       message: "Product added successfully",
     });
   } catch (error) {
+    console.error("POST /api/desktop_product error:", error);
+
     return NextResponse.json(
       {
         message: "Internal server error",
@@ -53,8 +55,10 @@ export async function GET() {
       message: "Data fetched successfully",
     });
   } catch (error) {
+    console.error("GET /api/desktop_product error:", error);
+
     return NextResponse.json({
-      error: "Internal server error",
+      message: "Internal server error",
     });
   }
 }

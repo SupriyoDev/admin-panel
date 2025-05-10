@@ -21,7 +21,6 @@ const UnifiedInput = ({
   label,
   componentType,
   fieldName,
-  setValue,
   options,
   inputType = "text",
   isNumber = false,
@@ -71,8 +70,8 @@ const UnifiedInput = ({
 
       {componentType === "radio" && (
         <div className=" flex justify-between px-5">
-          {options?.map((option) => (
-            <label className=" flex flex-col gap-1">
+          {options?.map((option, i) => (
+            <label className=" flex flex-col gap-1" key={i}>
               <span className="label">{option.label}</span>
               <input
                 {...register(fieldName)}

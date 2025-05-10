@@ -3,10 +3,10 @@
 import CustomSelect from "@/app/_components/CustomSelect";
 import DesktopProductCard from "@/app/_components/DesktopProductCard";
 import { DesktopProductResponse } from "@/drizzle/schema";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export const dynamic = "force-dynamic";
 

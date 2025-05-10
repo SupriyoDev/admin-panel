@@ -1,11 +1,11 @@
 import { db } from "@/drizzle/db";
 import { laptopTable } from "@/drizzle/schema";
 import { BufferToBase64 } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 import { v2 as cloudinary } from "cloudinary";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { ImageCompressor, UploadToCloudinary } from "../laptop/route";
-import { auth } from "@clerk/nextjs/server";
 
 // https://res.cloudinary.com/dgfqenqkj/image/upload/v1743083873/feature-image/elvfhozg1rtixnqcvgnh.webp
 // From this we want to get the below --
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     const imageFilesArray = data.getAll("images") as File[];
 
     const imagesurls = await Promise.all(
-      imageFilesArray.map(async (image, i) => {
+      imageFilesArray.map(async (image) => {
         const compressed = await ImageCompressor(image);
         const base64 = await BufferToBase64(compressed);
 
@@ -83,6 +83,8 @@ export async function POST(req: NextRequest) {
       message: "Image updated successfully",
     });
   } catch (error) {
+    console.error("POST /api/LAPTOPIMG error:", error);
+
     return NextResponse.json({
       message: "Internal server error",
     });

@@ -1,9 +1,8 @@
 import { Laptop } from "lucide-react";
-import React, { useState } from "react";
 
-import AddNewLaptop from "../../_components/addnewlaptop";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import AddNewLaptop from "../../_components/addnewlaptop";
 
 const AdminPage = () => {
   return (

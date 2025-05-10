@@ -1,7 +1,6 @@
 "use client";
 
 import UnifiedInput from "@/app/_components/UnifiedInput";
-import { CldUploadWidget } from "next-cloudinary";
 import { Input } from "@/components/ui/input";
 
 import {
@@ -22,10 +21,10 @@ import {
 } from "@/constants/data";
 import { desktopProductFormSchema, desktopProductType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm } from "react-hook-form";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Loader, X } from "lucide-react";
 import axios from "axios";
+import { Loader, X } from "lucide-react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const AllowedTypes = ["image/jpg", "image/jpeg", "image/png"];
@@ -42,7 +41,7 @@ const DesktopPage = () => {
     resolver: zodResolver(desktopProductFormSchema),
   });
 
-  const { reset, watch, getValues } = methods;
+  const { reset, watch } = methods;
   const OnSubmit = async (data: desktopProductType) => {
     setloading(true);
     try {
@@ -60,7 +59,8 @@ const DesktopPage = () => {
       }
 
       toast.success(res.data.message);
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setloading(false);
     }
@@ -93,7 +93,8 @@ const DesktopPage = () => {
       localStorage.setItem("images", JSON.stringify(res.data.imageUrls));
       setImageUrls(res.data.imageUrls);
       toast.success(res.data.message);
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setloading(false);
     }
