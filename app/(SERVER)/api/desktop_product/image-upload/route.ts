@@ -51,11 +51,7 @@ export async function POST(req: NextRequest) {
 }
 
 ///Image compressor
-export async function ImageCompressor(
-  file: File,
-  quality = 90,
-  maxwidth = 800
-) {
+async function ImageCompressor(file: File, quality = 90, maxwidth = 800) {
   const fileBuffer = Buffer.from(await file.arrayBuffer());
   const buffer = await sharp(fileBuffer)
     .resize({ width: maxwidth, withoutEnlargement: true })
