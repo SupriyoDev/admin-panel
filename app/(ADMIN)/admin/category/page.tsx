@@ -3,6 +3,7 @@
 import CustomSelect from "@/app/_components/CustomSelect";
 import DesktopProductCard from "@/app/_components/DesktopProductCard";
 import { DesktopProductResponse } from "@/drizzle/schema";
+import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
@@ -11,6 +12,9 @@ import { useState } from "react";
 export const dynamic = "force-dynamic";
 
 const Category = () => {
+  const { userId } = useAuth();
+  console.log("userId", userId);
+
   // const [allProducts, setAllProducts] = useState<DesktopProductResponse>([]);
   const [filterCategory, selectFilterCategory] = useState<{
     category: string;
@@ -20,10 +24,14 @@ const Category = () => {
     brand: "",
   });
 
-  const { data, isError, isPending } = useQuery<DesktopProductResponse, Error>({
-    queryKey: ["desktop_products"],
+  const { data, isError, isPending, error } = useQuery<
+    DesktopProductResponse,
+    Error
+  >({
+    queryKey: ["desktop_products_all"],
     queryFn: async () => {
       const res = await axios.get("/api/desktop_product");
+      // if (res.data.error) return [];
       return res.data.products;
     },
     staleTime: 10 * 60 * 1000,
@@ -31,8 +39,11 @@ const Category = () => {
     refetchOnWindowFocus: false,
   });
 
+  console.log("error", error);
+  console.log(data);
+
   if (isError)
-    return <div className="w-full py-6 ">Something went wrong...</div>;
+    return <div className="w-full py-6 "> Something went wrong...</div>;
   if (isPending)
     return (
       <div className="w-full py-6 ">
