@@ -6,9 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     //session check
-    // const { userId } = await auth();
-    // if (!userId)
-    //   return NextResponse.json({ error: "Unauthorized user" }, { status: 401 });
+    const { userId } = await auth();
+    if (!userId)
+      return NextResponse.json({ error: "Unauthorized user" }, { status: 401 });
 
     //perform task
 
@@ -45,14 +45,13 @@ export async function GET(req: NextRequest) {
   try {
     //session check
     const { userId } = await auth();
-    console.log("userId", userId);
-    // if (!userId)
-    //   return NextResponse.json({ error: "Unauthorized user" }, { status: 401 });
+
+    if (!userId)
+      return NextResponse.json({ error: "Unauthorized user" }, { status: 401 });
 
     //perform task
 
     const products = await db.select().from(desktopTable);
-    console.log("products", products);
 
     return NextResponse.json({
       products,
