@@ -65,19 +65,19 @@ const UnifiedImgaeinput = ({
       <label htmlFor={fieldName}>{label}</label>
 
       <div className="flex gap-4 ">
-        <div className="bg-primary w-[500px] py-3 px-3 rounded-lg ">
+        <div className="bg-[#008add] w-[500px] py-3 px-3 rounded-lg ">
           <input
             {...props}
             {...register(fieldName)}
             type="file"
             multiple={isMultiple}
-            className="bg-primary   text-white border-2 border-dashed w-full px-4"
+            className="bg-[#008add]   text-white border-2 border-dashed w-full px-4"
           />
         </div>
         {previewUrl && previewUrl.length > 0 && (
           <button
             onClick={() => handleReset()}
-            className=" btn btn-primary rounded-lg  "
+            className=" btn bg-[#008add] rounded-lg text-white "
           >
             Reset
           </button>

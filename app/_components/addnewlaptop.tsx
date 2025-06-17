@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { Loader2 } from "lucide-react";
+import { File, FileUp, ImageUp, Loader2, ToggleRight } from "lucide-react";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import {
@@ -40,6 +40,7 @@ const addnewlaptop = () => {
     formdata.append("romsize", data.romsize);
     formdata.append("romtype", data.romtype);
     formdata.append("useType", data.useType);
+    formdata.append("mrp", String(data.mrp));
     formdata.append("featureImage", data.featureImage[0]);
     (Array.from(data.images) as File[]).forEach((image) =>
       formdata.append(`images`, image as File)
@@ -88,6 +89,13 @@ const addnewlaptop = () => {
               componentType="textarea"
               fieldName="description"
               label="Description (Laptop specification)"
+            />
+            <UnifiedInput
+              componentType="input"
+              fieldName="mrp"
+              label="MRP"
+              isNumber={true}
+              inputType="number"
             />
             <UnifiedInput
               componentType="input"
@@ -144,7 +152,7 @@ const addnewlaptop = () => {
 
           <button
             disabled={isLoading}
-            className="btn btn-primary mystyle mt-6 "
+            className="btn bg-[#008add] text-white text-lg py-6 mystyle mt-6 "
           >
             {isLoading ? (
               <p>
@@ -152,7 +160,10 @@ const addnewlaptop = () => {
                 <span>Submitting</span>{" "}
               </p>
             ) : (
-              "Submit"
+              <p className=" flex gap-2 ">
+                {" "}
+                UPLOAD TO DB <ImageUp size={28} /> <FileUp size={28} />
+              </p>
             )}
           </button>
         </form>

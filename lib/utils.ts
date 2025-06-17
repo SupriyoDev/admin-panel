@@ -1,4 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
+import { FormEvent, RefObject, SetStateAction } from "react";
+import toast, { ToastType } from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -19,3 +21,38 @@ export function ExtractPublicId(urls: string[]) {
     return `${folder}/${filename}`;
   });
 }
+
+export const LaptopDataUpdateHandler = (
+  itemId: string,
+  fieldName: string,
+  targetref: RefObject<HTMLInputElement | HTMLTextAreaElement | null>,
+  setLoading: React.Dispatch<SetStateAction<boolean>>,
+  updateAction: (
+    data: FormData
+  ) => Promise<{ error?: string; message?: string }>
+) => {
+  return async (e: FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+
+    try {
+      e.preventDefault();
+      const formdata = new FormData();
+      if (targetref.current) {
+        formdata.append("laptop_id", itemId);
+        formdata.append(fieldName, targetref.current.value);
+      }
+
+      const res = await updateAction(formdata);
+
+      if (res.error) {
+        toast.error(res.error);
+      } else {
+        toast.success(res.message!);
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
+};

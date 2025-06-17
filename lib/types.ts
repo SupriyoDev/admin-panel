@@ -52,6 +52,7 @@ export const laptopFormSchema = z.object({
   price: z
     .number({ message: "Enter the laptop price" })
     .min(1, "Enter the laptop price"),
+  mrp: z.number({ message: "Enter the MRP." }).min(1, "Enter the MRP."),
   inventory: z
     .number({ message: " Total stocks in number" })
     .min(1, "Total stocks of this laptop"),
@@ -77,6 +78,7 @@ export type laptopResponseType = {
   name: string;
   brand: string;
   price: number;
+  mrp: number | null;
   inventory: number;
   featureImage: string;
   images: string[];
@@ -95,6 +97,7 @@ export const laptopDetailsSchema = z.object({
   price: z
     .number({ message: "Enter the laptop price" })
     .min(1, "Enter the laptop price"),
+  mrp: z.number({ message: "Enter the MRP." }).min(1, "Enter the MRP."),
   inventory: z
     .number({ message: " Total stocks in number" })
     .min(1, "Total stocks of this laptop"),
@@ -125,6 +128,9 @@ export const baseSchema = z.object({
   price: z
     .number({ message: "Enter the product price" })
     .min(1, "Enter the product price"),
+  mrp: z
+    .number({ message: "Enter the product MRP" })
+    .min(1, "Enter the product MRP"),
   inventory: z
     .number({ message: " Total stocks in number" })
     .min(1, "Total stocks of this product"),
@@ -232,6 +238,14 @@ export const cpuCoolerSchema = z.object({
   ...baseSchema.shape,
   category: z.literal("cpu-cooler"),
 });
+export const printerSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("printer"),
+});
+export const antivirusSchema = z.object({
+  ...baseSchema.shape,
+  category: z.literal("antivirus"),
+});
 
 // Combine schemas for conditional validation
 export const desktopProductFormSchema = z.discriminatedUnion("category", [
@@ -249,6 +263,8 @@ export const desktopProductFormSchema = z.discriminatedUnion("category", [
   speakerSchema,
   cabinetSchema,
   cpuCoolerSchema,
+  printerSchema,
+  antivirusSchema,
 ]);
 
 export type desktopProductType = z.infer<typeof desktopProductFormSchema>;

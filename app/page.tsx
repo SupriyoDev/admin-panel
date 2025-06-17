@@ -8,7 +8,7 @@ const Home = async () => {
   if (sessionId !== null) redirect("/admin");
 
   return (
-    <div className="w-full h-screen bg-primary ">
+    <div className="w-full h-screen bg-[#008add] ">
       <div className=" w-full grid grid-cols-5 h-screen ">
         {/* side 1  */}
         <div className="col-span-3">

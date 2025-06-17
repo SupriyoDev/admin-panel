@@ -2,7 +2,7 @@ import { SignIn } from "@clerk/nextjs";
 
 export default function Page() {
   return (
-    <div className=" w-full bg-primary">
+    <div className=" w-full bg-[#008add]">
       <div className=" w-full grid grid-cols-5 h-screen ">
         {/* side 1  */}
         <div className="col-span-3">

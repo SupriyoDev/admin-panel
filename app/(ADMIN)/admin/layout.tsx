@@ -6,7 +6,7 @@ const AdminLayout = ({ children }: PropsWithChildren) => {
     <div className="">
       <Sidebar />
       <div className="md:ml-56 flex flex-col">
-        <div className="w-full flex items-center px-4 h-16 z-50 border-b border-gray-200 bg-white/30 backdrop-blur-md  fixed top-0 ">
+        <div className="w-full flex items-center px-4 h-16 z-50 border-b-1 border-[#cde8f8]  bg-white/30 backdrop-blur-md  fixed top-0 ">
           <p>Admin Panel</p>
         </div>
         <div className=" px-10 mt-24 overflow-y-scroll ">{children}</div>

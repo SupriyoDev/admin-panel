@@ -1,27 +1,39 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { updateLaptopPriceAction } from "@/lib/actions";
+import {
+  updateLaptopDescriptionAction,
+  updateLaptopInventoryAction,
+  updateLaptopMrpAction,
+  updateLaptopPriceAction,
+} from "@/lib/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Link from "next/link";
 import { FormEvent, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import toast, { ToastType } from "react-hot-toast";
 import {
   LaptopformType,
   laptopImgsSchema,
   laptopResponseType,
 } from "../../lib/types";
 import UnifiedImgaeinput from "./unifiedImageInput";
+import { LaptopDataUpdateHandler } from "@/lib/utils";
 
 export type LaptopDetails = Omit<LaptopformType, "featureImage" | "images">;
 export type LaptopImgs = Pick<LaptopformType, "featureImage" | "images">;
 
 const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
   const [isLoading, setLoading] = useState(false);
+  const [isLoading1, setLoading1] = useState(false);
+  const [isLoading2, setLoading2] = useState(false);
+  const [isLoading3, setLoading3] = useState(false);
   const [isOpen, setOpen] = useState(true);
   const inputref = useRef<HTMLInputElement>(null);
+  const mrpRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const inventoryRef = useRef<HTMLInputElement>(null);
 
   // const detailMethod = useForm<LaptopDetails>({
   //   resolver: zodResolver(laptopDetailsSchema),
@@ -36,6 +48,7 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
     resolver: zodResolver(laptopImgsSchema),
   });
 
+  // laptop price update
   const HandleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setLoading(true);
 
@@ -60,6 +73,8 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
       setLoading(false);
     }
   };
+
+  // image update
 
   const OnImageSubmit = async ({
     featureImage,
@@ -95,7 +110,9 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
           Update Laptop Details :
         </h2>
         <Link href={"/admin/allLaptop"}>
-          <button className=" btn btn-primary rounded-lg ">Back</button>
+          <button className=" btn bg-[#008add] rounded-lg text-white ">
+            Back
+          </button>
         </Link>
       </div>
       <form onSubmit={HandleSubmit} className=" ">
@@ -181,7 +198,7 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
           </div> */}
 
         <Input
-          className=" border-2 border-amber-400"
+          className=" border-2 border-[#008add]"
           ref={inputref}
           step="any"
           type="number"
@@ -192,12 +209,105 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
         <button
           type="submit"
           disabled={isLoading}
-          className="btn btn-warning text-black  text-lg mystyle mt-6 max-w-[200px]  "
+          className="btn bg-[#008add] text-white  text-lg mystyle mt-6 max-w-[200px]  "
         >
           {isLoading ? "Updating price..." : "Update Price"}
         </button>
       </form>
       {/* </FormProvider> */}
+
+      {/* update laptop mrp  */}
+
+      <div className=" mt-10">
+        <form
+          onSubmit={LaptopDataUpdateHandler(
+            laptop.id,
+            "laptop_mrp",
+            mrpRef,
+            setLoading1,
+            updateLaptopMrpAction
+          )}
+        >
+          <Input
+            className=" border-2 border-[#008add]  "
+            ref={mrpRef}
+            step="any"
+            type="number"
+            required
+            placeholder="Update Maximum Retail price"
+          />
+
+          <button
+            type="submit"
+            disabled={isLoading1}
+            className="btn bg-[#008add] text-white  text-lg mystyle mt-6 max-w-[200px]  "
+          >
+            {isLoading1 ? "Updating MRP..." : "Update MRP"}
+          </button>
+        </form>
+      </div>
+
+      {/* update laptop description  */}
+      <div className=" mt-10">
+        <form
+          className=" flex flex-col"
+          onSubmit={LaptopDataUpdateHandler(
+            laptop.id,
+            "laptop_description",
+            descriptionRef,
+            setLoading2,
+            updateLaptopDescriptionAction
+          )}
+        >
+          <textarea
+            className=" border-2 border-[#008add] rounded-xl overflow-hidden py-2 px-4 "
+            required
+            ref={descriptionRef}
+            rows={5}
+            placeholder="Update Laptop Description"
+          />
+
+          <button
+            type="submit"
+            disabled={isLoading2}
+            className="btn bg-[#008add] text-white  text-lg mystyle mt-6 max-w-[200px]  "
+          >
+            {isLoading2 ? "Updating Description..." : "Update Description"}
+          </button>
+        </form>
+      </div>
+      {/* update laptop Inventory  */}
+      <div className=" mt-10">
+        <form
+          className=" flex flex-col"
+          onSubmit={LaptopDataUpdateHandler(
+            laptop.id,
+            "laptop_inventory",
+            inventoryRef,
+            setLoading3,
+            updateLaptopInventoryAction
+          )}
+        >
+          <Input
+            className=" border-2 border-[#008add]  "
+            ref={inventoryRef}
+            step="any"
+            type="number"
+            required
+            placeholder="Update Inventory"
+          />
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn bg-[#008add] text-white  text-lg mystyle mt-6 max-w-[200px]  "
+          >
+            {isLoading ? "Updating Inventory..." : "Update stocks"}
+          </button>
+        </form>
+      </div>
+
+      {/* update laptop images  */}
 
       <div className="mt-20 py-10">
         <h3 className="bg-slate-700 text-white px-8 py-3 text-lg rounded-lg mb-8">
@@ -218,7 +328,7 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
             />
             <button
               type="submit"
-              className="btn btn-warning text-black  text-lg mystyle mt-6 max-w-[200px]"
+              className="btn bg-[#008add] text-white  text-lg mystyle mt-6 max-w-[200px]"
             >
               Update Images
             </button>

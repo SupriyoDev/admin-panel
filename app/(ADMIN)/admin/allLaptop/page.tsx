@@ -11,7 +11,7 @@ const AllLaptop = () => {
           All Stocks
         </h3>
         <Link href={"/admin"}>
-          <Button className=" ">Back</Button>
+          <Button className="bg-[#008add] hover:bg-[#008add] ">Back</Button>
         </Link>
       </div>
       <GetAllLaptop />

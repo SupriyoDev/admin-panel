@@ -47,7 +47,7 @@ const Category = () => {
   if (isPending)
     return (
       <div className="w-full py-6 ">
-        <p className="text-4xl font-bold text-primary">Loading...</p>
+        <p className="text-4xl font-bold text-[#008adc]">Loading...</p>
       </div>
     );
   // useEffect(() => {

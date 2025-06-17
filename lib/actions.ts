@@ -109,3 +109,77 @@ export async function deleteLaptopAction(data: FormData) {
     return { error: "Something went wrong" };
   }
 }
+
+export async function updateLaptopMrpAction(data: FormData) {
+  try {
+    const { userId } = await auth();
+    if (!userId) return { error: "Unauthorized user" };
+
+    // get data
+    const laptopMrp = Number(data.get("laptop_mrp"));
+    const laptopId = String(data.get("laptop_id"));
+
+    await db
+      .update(laptopTable)
+      .set({
+        mrp: laptopMrp,
+      })
+      .where(eq(laptopTable.id, laptopId));
+
+    revalidatePath("/admin/allLaptop");
+    return {
+      message: "Laptop MRP updated successfully!",
+    };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+}
+export async function updateLaptopInventoryAction(data: FormData) {
+  try {
+    const { userId } = await auth();
+    if (!userId) return { error: "Unauthorized user" };
+
+    // get data
+    const laptop_inventory = Number(data.get("laptop_inventory"));
+    const laptopId = String(data.get("laptop_id"));
+
+    await db
+      .update(laptopTable)
+      .set({
+        inventory: laptop_inventory,
+      })
+      .where(eq(laptopTable.id, laptopId));
+
+    revalidatePath("/admin/allLaptop");
+    return {
+      message: "Laptop stocks updated successfully!",
+    };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+}
+
+export async function updateLaptopDescriptionAction(data: FormData) {
+  try {
+    const { userId } = await auth();
+    if (!userId) return { error: "Unauthorized user" };
+
+    // get data
+    const laptopDescription = String(data.get("laptop_description"));
+    const laptopId = String(data.get("laptop_id"));
+
+    await db
+      .update(laptopTable)
+      .set({
+        description: laptopDescription,
+      })
+      .where(eq(laptopTable.id, laptopId));
+
+    revalidatePath("/admin/allLaptop");
+    return {
+      message: "Laptop Description updated successfully!",
+    };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+}

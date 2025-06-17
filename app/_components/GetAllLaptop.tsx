@@ -26,7 +26,7 @@ const GetAllLaptop = () => {
   if (isPending) {
     return (
       <div className=" py-10">
-        <p className="text-5xl font-bold text-primary">Loading...</p>
+        <p className="text-5xl font-bold text-[#008add]">Loading...</p>
       </div>
     );
   }

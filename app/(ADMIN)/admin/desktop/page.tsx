@@ -144,7 +144,7 @@ const DesktopPage = () => {
   return (
     <div>
       <div className="">
-        <h3 className="text-white text-xl font-semibold bg-primary px-6 py-2 rounded-md ">
+        <h3 className="text-white text-xl font-semibold bg-[#008add] px-6 py-2 rounded-md ">
           Add New Desktop products :{"   "}
           <span className="text-xl font-light">
             First upload the images. Then fill the details
@@ -165,6 +165,13 @@ const DesktopPage = () => {
                 label="Brand"
                 options={DESKTOP_PRODUCT_BRANDS}
                 triggerLabel="Choose Brand"
+              />{" "}
+              <UnifiedInput
+                componentType="input"
+                isNumber={true}
+                inputType="number"
+                fieldName="mrp"
+                label="MRP"
               />{" "}
               <UnifiedInput
                 componentType="input"
@@ -343,13 +350,13 @@ const DesktopPage = () => {
               Product Images : (First upload the image then fill the product
               details) <span className="text-red-500 text-2xl">*</span>
             </label>
-            <div className="bg-primary w-[500px] py-3 px-3 rounded-lg ">
+            <div className="bg-[#008add] w-[500px] py-3 px-3 rounded-lg ">
               <Input
                 disabled={imageFiles.length > 2}
                 id="images"
                 type="file"
                 onChange={handleImageChange}
-                className="bg-primary   text-white border-2 border-dashed "
+                className="bg-[#008add]   text-white border-2 border-dashed h-11 "
                 placeholder=""
                 accept="image/jpg, image/png, image/jpeg, image/webp"
               />
