@@ -25,7 +25,7 @@ const Category = () => {
   });
 
   const { data, isError, isPending, error } = useQuery<
-    DesktopProductResponse,
+    DesktopProductResponse[],
     Error
   >({
     queryKey: ["desktop_products_all"],
