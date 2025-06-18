@@ -299,10 +299,10 @@ const EditLaptop = ({ laptop }: { laptop: laptopResponseType }) => {
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading3}
             className="btn bg-[#008add] text-white  text-lg mystyle mt-6 max-w-[200px]  "
           >
-            {isLoading ? "Updating Inventory..." : "Update stocks"}
+            {isLoading3 ? "Updating Inventory..." : "Update stocks"}
           </button>
         </form>
       </div>
